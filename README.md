@@ -29,7 +29,7 @@ $ uploadtos3 -v
 6) Add your project as well your AWS, details.
 For example:
 
-```json
+```javascript
 {
     // *required
     "defaults": {         
@@ -51,7 +51,7 @@ For example:
             "path": "./dist",
             "ignore": ["assets"],
             "profile": "default",
-            "region": <region>,
+            "region": "<region>",
             "s3Bucket": "arn:aws:s3:<region>:<account-id>:accesspoint/xxxx"  
         },
         ...
