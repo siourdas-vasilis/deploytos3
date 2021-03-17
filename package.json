@@ -1,0 +1,22 @@
+{
+  "name": "uploadtos3",
+  "version": "2.0.0",
+  "preferGlobal": true,
+  "bin": "./commander.js",
+  "description": "~ Uploads your files to Amazon S3 bucket with one command ~",
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "^2.860.0",
+    "colors": "^1.4.0",
+    "commander": "^7.1.0",
+    "glob": "^7.1.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "upload-to-S3"
+  ],
+  "author": "Vasilis Siourdas <vsiourdas@deloitte.gr>, DAAC RiskAdvisory",
+  "license": "ISC"
+}
