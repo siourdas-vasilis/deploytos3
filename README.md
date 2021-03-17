@@ -101,6 +101,6 @@ Options:
   -c, --config <configPath>     (default: "config.uploadtos3")
 ```
 
-
-__TODO__:
-**Create NPM Package
+---
+### TODO LIST__:
+> Create NPM Package
