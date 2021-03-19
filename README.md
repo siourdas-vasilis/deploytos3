@@ -8,7 +8,7 @@ ___
 ### 📍 TODO LIST
 
 - Add option of delete S3 files or just upload
-- Detailed Documendation
+- Detailed Documentation
 
 ___
 
