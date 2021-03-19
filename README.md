@@ -1,8 +1,9 @@
 # 🌌 `deploytos3`
 
-## A simple tool for uploading files to an S3 Bucket
-  
-___
+## A simple CLI tool for uploading files to an S3 Bucket
+
+___ 
+<br>
 
 ### 📍 TODO LIST
 
