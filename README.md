@@ -1,11 +1,32 @@
-___
-## `deploytos3` 
+# 🌌 `deploytos3`
 
-#### A simple tool for uploading files to an S3 Bucket.
+## A simple tool for uploading files to an S3 Bucket
+  
 ___
-<br>
 
-### How to use:
+### 📍 TODO LIST
+
+- Add option of delete S3 files or just upload
+- Detailed Documendation
+
+___
+
+### 📍 Default behaviors
+
+- **Deletes all** existing files on S3 except they are specified in `ignore` option. [TO BE FIXED IN THE FUTURE : should delete only by option]
+- Auto loads `.deploytos3` file inside your root path
+
+___
+
+### 📍 Install
+
+Install with Npm or Manually:
+
+#### NPM  
+
+> $ `npm install @siourdas-vasilis/deploytos3 -g`
+
+#### Manually to your folder of your choice
 
 1) Move the files to a directory of your choice
 
@@ -13,67 +34,69 @@ ___
 
 3) Run `npm link` to be able to run the app globally
 
-3) Test that the tool is working globally by running:
+___
 
-```powershell
-$ deploytos3 -v
+### 📍 How to use
 
-|~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-|       Deploy To S3 \_/     |
-|~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
- version: 2.0.0
+1) Test that the tool is working globally by running:
 
-```
+    ```powershell
+    $ deploytos3 -v
+    
+    |~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+    |       Deploy To S3 \_/     |
+    |~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+     version: 2.0.0
+    
+    ```
 
-5) Create config file in your project's root path, named `.deploytos3`
+2) Create config file in your project's root path, named `.deploytos3`
 
-6) Add your project as well your AWS, details.
+3) Add your project as well your AWS, details.
 For example:
 
-```javascript
-{
-    // *required
-    "defaults": {         
-        "env": "dev"//default environment to load
-    },
-
-    // Specify your environments
-    // you can add as many you wish here
-    // *required 
-    "env": {              
-        "dev": {          
-            "path": "./dist",//your path to be uploaded
-            "ignore": ["assets"],//paths you want to ignore
-            "profile": "default",//your AWS profile 
-            "region": "<region>",//your AWS region
-            "s3Bucket": "arn:aws:s3:<region>:<account-id>:accesspoint/xxxx"//your S3 accesspoint
+    ```javascript
+    {
+        // *required
+        "defaults": {         
+            "env": "dev"//default environment to load
         },
-        "prod": {
-            "path": "./dist",
-            "ignore": [],
-            "profile": "default",
-            "region": "<region>",
-            "s3Bucket": "arn:aws:s3:<region>:<account-id>:accesspoint/xxxx"  
-        },
-        ...
+    
+        // Specify your environments
+        // you can add as many you wish here
+        // *required 
+        "env": {              
+            "dev": {          
+                "path": "./dist",//your path to be uploaded
+                "ignore": ["assets"],//paths you want to ignore
+                "profile": "default",//your AWS profile 
+                "region": "<region>",//your AWS region
+                "s3Bucket": "arn:aws:s3:<region>:<account-id>:accesspoint/xxxx"//your S3 accesspoint
+            },
+            "prod": {
+                "path": "./dist",
+                "ignore": [],
+                "profile": "default",
+                "region": "<region>",
+                "s3Bucket": "arn:aws:s3:<region>:<account-id>:accesspoint/xxxx"  
+            },
+            ...
+        }
     }
-}
-```
----
+    ```
 
+4) Run the `upload` command in the directory of your project which contains your config file:
 
-7) Run the `upload` command in the directory of your project which contains your config file:
+    ```powershell
+    $ deploytos3 upload
+    ```
 
-```powershell
-$ deploytos3 upload
-```
+___
 
-<br>
+### 📍 Commands
+  
+> #### ***upload [options]***
 
-### Commands:
-<br>
-
-> ***upload [options]***
 ```powershell
 $ deploytos3 upload [options]
 
@@ -87,8 +110,11 @@ Options:
   -ig, --ignore <ignorePathsJSON>  Ignore paths or file for the upload procedure (JSON format)
   -c, --config <configPath>        Specify the config file of the project (default: ".deploytos3")
 ```
----
-> ***check [options]***
+
+___
+
+> #### ***check [options]***
+
 ```powershell
 $ deploytos3 check [options]
 
@@ -99,8 +125,6 @@ Options:
   -c, --config <configPath>     (default: ".deploytos3")
 ```
 
----
-### TODO LIST :
-- Create NPM Package
----
+___
+
 *the end*
