@@ -3,6 +3,9 @@ ___
 
 #### A simple tool for uploading FrontEnd static files to an S3 Bucket.
 ___
+###
+
+
 
 ### How to use:
 
@@ -42,14 +45,14 @@ For example:
     "env": {              
         "dev": {          
             "path": "./dist",        //your path to be uploaded
-            "ignore": [],            //paths you want to ignore
+            "ignore": ["assets"],            //paths you want to ignore
             "profile": "default",    //your AWS profile 
             "region": "<region>",    //your AWS region
             "s3Bucket": "arn:aws:s3:<region>:<account-id>:accesspoint/xxxx"    //your S3 accesspoint
         },
         "prod": {
             "path": "./dist",
-            "ignore": ["assets"],
+            "ignore": [],
             "profile": "default",
             "region": "<region>",
             "s3Bucket": "arn:aws:s3:<region>:<account-id>:accesspoint/xxxx"  
@@ -97,3 +100,9 @@ Check config settings
 Options:
   -c, --config <configPath>     (default: "config.uploadtos3")
 ```
+
+---
+### TODO LIST :
+- Create NPM Package
+---
+*the end*
