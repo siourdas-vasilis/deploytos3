@@ -2,7 +2,8 @@
 
 ## A simple CLI tool for uploading files to an S3 Bucket
 
-___ 
+#### ✅ Perfect use for your FrontEnd projects on your S3 Bucket
+
 <br>
 
 ### 📍 TODO LIST
