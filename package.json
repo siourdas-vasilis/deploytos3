@@ -20,10 +20,15 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
+    "nodejs",
     "deploy-to-S3",
     "upload-to-S3",
     "uploader",
-    "nodejs"
+    "cli-tool",
+    "cli",
+    "aws-sdk",
+    "aws-s3",
+    "aws"
   ],
   "author": "Vasilis Siourdas <siourdas.vasilis@gmail.gr>",
   "license": "MIT"
