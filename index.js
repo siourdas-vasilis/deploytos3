@@ -11,6 +11,12 @@ app.config = require('./config');
 app.utils = {};
 app.utils.excludeFromArray = (files, ignoreThese, withKey = false) => {
     const whitelisted = [];
+
+    if(ignoreThese==undefined){
+        return files;
+    }
+
+    
     for (const f of files) {
         for (const ig of ignoreThese) {
             if (withKey && !(new RegExp(`^${ig}`)).test(f.Key)) {
@@ -35,11 +41,13 @@ app.utils.getDirectories = (src) => {
 app.clearS3 = async () => {
 
     //AWS
-    const AWS = require('./lib/aws/aws').config(app.config.get());
+    if (app.AWS == undefined) {
+        app.AWS = require('./lib/aws/aws').config(app.config.get());
+    }
 
 
     // A) Init S3
-    app.s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+    app.s3 = new app.AWS.S3({ apiVersion: '2006-03-01' });
 
     // B) Get S3 Data
     var params = { Bucket: app.config.get().s3Bucket };
@@ -51,7 +59,7 @@ app.clearS3 = async () => {
     var params = {
         Bucket: app.config.get().s3Bucket,
         Delete: {
-            Objects: app.utils.excludeFromArray(s3Objects.Contents, app.config.get().ignore, true),
+            Objects: app.utils.excludeFromArray(s3Objects.Contents, app.config.get().ignoreS3, true),
             Quiet: false
         }
     };
@@ -68,8 +76,10 @@ app.clearS3 = async () => {
 app.deploytos3 = async () => {
 
     //AWS
-    const AWS = require('./lib/aws/aws').config(app.config.get());
-    app.s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+    if (app.AWS == undefined) {
+        app.AWS = require('./lib/aws/aws').config(app.config.get());
+    }
+    app.s3 = new app.AWS.S3({ apiVersion: '2006-03-01' });
     const fs = require('fs');
 
     // A) Read all data needs to be uploaded
@@ -91,7 +101,7 @@ app.deploytos3 = async () => {
 
         // Setting up S3 upload parameters
         var thisContType = filename.split('.');
-        
+
         const params = {
             Bucket: app.config.get().s3Bucket,
             Key: s3name, // File name you want to save as in S3
@@ -109,13 +119,20 @@ app.deploytos3 = async () => {
 //Run the script
 app.run = async () => {
     try {
-        await app.clearS3();
+
+        // Config AWS
+        app.AWS = require('./lib/aws/aws').config(app.config.get());
+
+        // Clear S3 if is set to
+        if (app.config.get().clearS3) { await app.clearS3(); }
+
+        // Deploy data
         await app.deploytos3();
-        console.log('> '.green + ' Completed  ');
+
+        console.log('> '.green + ' Upload Completed  ');
     } catch (error) {
         console.error(error);
         throw (new Error(error.message.red));
     }
-
 }
 module.exports = app;

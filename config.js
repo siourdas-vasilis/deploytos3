@@ -1,5 +1,5 @@
 const readjson = require("./lib/utils/readjson");
-
+const colors = require('colors');
 
 var loadedConfig = {}; // loaded configs
 var configPath = '.deploytos3'; // default config path
@@ -23,10 +23,12 @@ module.exports = {
         if (inp && inp.profile) { attrs.profile = inp.profile; }
         if (inp && inp.region) { attrs.region = inp.region; }
         if (inp && inp.s3Bucket) { attrs.s3Bucket = inp.s3Bucket; }
+        if (inp && inp.clearS3) { attrs.clearS3 = true; }//1
         if (inp && inp.ignorePathsJSON) { attrs.ignore = JSON.parse(inp.ignorePathsJSON); }
+        if (inp && inp.ignorePathsJSON_S3) { attrs.ignoreS3 = JSON.parse(inp.ignorePathsJSON_S3); }//2
 
         loadedConfig = attrs;
-        console.log('-> Attributes Loaded: ', loadedConfig);
+        console.log('>'.green+' Attributes Loaded: ', loadedConfig);
         return loadedConfig;
     }
 }

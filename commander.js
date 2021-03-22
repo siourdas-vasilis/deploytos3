@@ -12,17 +12,19 @@ program
 // Upload Command
 program.command('upload')
     .description("Upload your files to your S3 bucket")
+    .option('-c, --config <configPath>', 'Specify the config file of the project', '.deploytos3')
     .option('-e, --env <env>', 'Specify environment that will be used from `config.js` file. ', 'dev')
     .option('-p, --path <path>', 'Specify path of the folder that will be uploaded. ')
     .option('-pr, --profile <profile>', 'Specify AWS profile ')
     .option('-s3, --s3-bucket <bucket>', 'Specify the S3 bucket')
-    .option('-ig, --ignore <ignorePathsJSON>', 'Ignore paths or file for the upload procedure (JSON format)')
-    .option('-c, --config <configPath>', 'Specify the config file of the project', '.deploytos3')
+    .option('-ig, --ignore <ignorePathsJSON>', 'Ignore paths or files for the upload procedure (JSON format)')
+    .option('-ig-s3, --ignore-s3 <ignorePathsJSON_S3>', 'Ignore paths of S3 (JSON format)')
+    .option('-cl-s3, --clear-s3', 'Option to delete existing files in S3 before upload begins (used with  --ignore-s3  to avoid deletion of specific paths/files)')
     .action(async (inp) => {
 
         const app = require('./index.js');
         app.config.load(inp);
-        await app.run().catch(err => console.error(err));
+        app.run().catch(err => console.error(err));
     })
 
 program.command('check')
