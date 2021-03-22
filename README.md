@@ -6,12 +6,6 @@
 
 <br>
 
-### 📍 TODO LIST
-
-- Add option of delete S3 files or just upload
-- Detailed Documentation
-
-
 ___
 
 ### 📍 Install
