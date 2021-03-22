@@ -6,8 +6,6 @@
 
 <br>
 
-___
-
 ### 📍 Install
 
 Install with Npm or Manually:
