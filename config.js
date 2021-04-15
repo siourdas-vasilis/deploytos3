@@ -20,6 +20,7 @@ module.exports = {
         var attrs = config.env[config.defaults.env];
         if (inp && inp.env) { attrs = config.env[inp.env] }
         if (inp && inp.path) { attrs.path = inp.path; }
+        if (inp && inp.s3Path && !(["", "/", '\\'].includes(inp.s3Path))) { attrs.s3Path = inp.s3Path; }
         if (inp && inp.profile) { attrs.profile = inp.profile; }
         if (inp && inp.region) { attrs.region = inp.region; }
         if (inp && inp.s3Bucket) { attrs.s3Bucket = inp.s3Bucket; }
@@ -28,7 +29,8 @@ module.exports = {
         if (inp && inp.ignorePathsJSON_S3) { attrs.ignoreS3 = JSON.parse(inp.ignorePathsJSON_S3); }//2
 
         loadedConfig = attrs;
-        console.log('>'.green+' Attributes Loaded: ', loadedConfig);
+        if (loadedConfig == undefined) { throw ("Config load failed! Please check your inputs and `.deploytos3` file!".red) }
+        console.log('>'.green + ' Attributes Loaded: ', loadedConfig);
         return loadedConfig;
     }
 }

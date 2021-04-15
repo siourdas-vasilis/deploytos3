@@ -12,20 +12,24 @@ app.utils = {};
 app.utils.excludeFromArray = (files, ignoreThese, withKey = false) => {
     const whitelisted = [];
 
-    if(ignoreThese==undefined){
+    if (ignoreThese == undefined || ignoreThese.length == 0) {
+        if (withKey) {
+            files = files.map(el => { return { Key: el.Key } });
+        }
         return files;
     }
 
-    
+
     for (const f of files) {
         for (const ig of ignoreThese) {
             if (withKey && !(new RegExp(`^${ig}`)).test(f.Key)) {
                 whitelisted.push({ Key: f.Key });
+                break;
             }
             if (!withKey && !(new RegExp(`^${ig}`)).test(f)) {
                 whitelisted.push(f);
+                break;
             }
-            break;
         }
 
     }
@@ -50,9 +54,9 @@ app.clearS3 = async () => {
     app.s3 = new app.AWS.S3({ apiVersion: '2006-03-01' });
 
     // B) Get S3 Data
-    var params = { Bucket: app.config.get().s3Bucket };
+    var params = { Bucket: app.config.get().s3Bucket, Prefix: app.config.get().s3Path };
     const s3Objects = await app.s3.listObjectsV2(params).promise();
-    console.log('> '.green + 'Got objects');
+    console.log('> '.green + 'Got S3 objects');
 
 
     // C) Empty S3
@@ -63,6 +67,7 @@ app.clearS3 = async () => {
             Quiet: false
         }
     };
+    
     if (params.Delete.Objects.length) {
         const deleted = await app.s3.deleteObjects(params).promise().catch((err) => { throw (err) });
         console.log('> '.green + 'Deleted from S3:');
@@ -84,8 +89,19 @@ app.deploytos3 = async () => {
 
     // A) Read all data needs to be uploaded
     var files = app.utils.excludeFromArray(app.utils.getDirectories(app.config.get().path), app.config.get().ignore.map(el => app.config.get().path + '/' + el), false);
-    console.log('> '.green + 'Data loaded..');
-    console.log(files);
+
+    if (!files.length) {
+        console.log('> Local files not found..'.yellow);
+        console.log('path: ' + app.config.get().path);
+        process.exit();
+    } else {
+        console.log('> '.green + 'Data loaded..');
+        console.log(files);
+    }
+
+
+
+
 
     // B) Then upload the new files
     console.log('> '.green + 'Upload initiated..');
@@ -104,7 +120,7 @@ app.deploytos3 = async () => {
 
         const params = {
             Bucket: app.config.get().s3Bucket,
-            Key: s3name, // File name you want to save as in S3
+            Key: (app.config.get().s3Path) ?  (app.config.get().s3Path+ '/' + s3name) : s3name, // File name you want to save as in S3
             Body: fileContent,
             ContentType: mime.getType(thisContType.pop())
         };
